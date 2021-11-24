@@ -20,7 +20,10 @@ inputEl.addEventListener("input", debounce(inputFunction, DEBOUNCE_DELAY))
 
 function inputFunction(event) {
     event.preventDefault();
-    const nameOfCountry = inputEl.value.trim();
+  const nameOfCountry = inputEl.value.trim();
+  if (nameOfCountry === "") {
+    return;
+  }
   fetchCountries(nameOfCountry).then(renderMarkup)
     .catch(showError)
 }
@@ -35,7 +38,7 @@ function showError () {
 function renderMarkup(userCountry) {
   const numberOfCountries = userCountry.length;
 
-  if (numberOfCountries < 10 && numberOfCountries > 1) {
+  if (numberOfCountries <= 10 && numberOfCountries > 1) {
     countryList.innerHTML = "";
     countryInfo.innerHTML = "";
     countryList.innerHTML = allCountries(userCountry);
